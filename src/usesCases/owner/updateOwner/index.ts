@@ -1,5 +1,5 @@
-import { ownerRepository } from "../../../repositories";
-import UpdateOwner from "./updateOwner";
+import { ownerRepository } from '../../../repositories';
+import UpdateOwner from './updateOwner';
 
 const updateOwner = new UpdateOwner(ownerRepository);
 

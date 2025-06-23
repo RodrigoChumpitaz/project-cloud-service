@@ -53,7 +53,7 @@ const vehicleSchema = new Schema<IVehicleDb>(
 		registrationDate: { type: Date, required: true, trim: true },
 		notes: { type: String, trim: true },
 		ownerId: { type: Schema.Types.ObjectId, ref: 'Owner' },
-		status: { type: String, default: '' },
+		status: { type: String, default: '' }
 	},
 	{
 		timestamps: true,
@@ -79,19 +79,22 @@ const repairLogSchema = new Schema<IRepairLogDb>(
 	}
 );
 
-const ownerSchema = new Schema<IOwnerDb>({
-	name: { type: String, required: true },
-	lastName: { type: String, required: true },
-	middleName: { type: String },
-	secondLastName: { type: String },
-	documentType: { type: String, required: true },
-	documentNumber: { type: String, required: true },
-	phoneNumber: { type: String },
-	email: { type: String },
-}, {
-	timestamps: true,
-	versionKey: false
-})
+const ownerSchema = new Schema<IOwnerDb>(
+	{
+		name: { type: String, required: true },
+		lastName: { type: String, required: true },
+		middleName: { type: String },
+		secondLastName: { type: String },
+		documentType: { type: String, required: true },
+		documentNumber: { type: String, required: true },
+		phoneNumber: { type: String },
+		email: { type: String }
+	},
+	{
+		timestamps: true,
+		versionKey: false
+	}
+);
 
 userSchema.pre<IUserDb>('save', async function (next) {
 	if (!this.token) {

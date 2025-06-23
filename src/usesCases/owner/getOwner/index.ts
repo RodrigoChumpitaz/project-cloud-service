@@ -1,5 +1,5 @@
-import { ownerRepository } from "../../../repositories";
-import GetOwner from "./getOwner";
+import { ownerRepository } from '../../../repositories';
+import GetOwner from './getOwner';
 
 const getOwner = new GetOwner(ownerRepository);
 

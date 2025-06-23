@@ -1,5 +1,5 @@
-import { ownerRepository } from "../../../repositories";
-import CreateOwner from "./createOwner";
+import { ownerRepository } from '../../../repositories';
+import CreateOwner from './createOwner';
 
 const createOwner = new CreateOwner(ownerRepository);
 

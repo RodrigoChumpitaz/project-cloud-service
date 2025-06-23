@@ -10,7 +10,7 @@ const vehicleSchema = Joi.object<IVehicleProps>({
 	registrationDate: Joi.date().required(),
 	notes: Joi.string().allow('').optional(),
 	ownerId: Joi.string().optional().allow(null), // Permite null si el propietario no está asignado
-	status: Joi.string().optional().allow(''), // Permite solo 'active' o 'inactive'
+	status: Joi.string().optional().allow('') // Permite solo 'active' o 'inactive'
 });
 
 const validateVehicleSchema = (vehicle: IVehicleProps): Joi.ValidationResult<IVehicleProps> => {

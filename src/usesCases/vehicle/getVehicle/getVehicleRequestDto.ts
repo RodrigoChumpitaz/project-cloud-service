@@ -1,3 +1,3 @@
 export interface GetVehicleRequestDto {
-	id: string
+	id: string;
 }

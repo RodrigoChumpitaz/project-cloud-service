@@ -1,13 +1,13 @@
 export interface IOwnerDb {
-    _id: string;
-    name: string;
-    middleName?: string;
-    lastName: string;
-    secondLastName?: string;
-    documentType: string;
-    documentNumber: string;
-    phoneNumber?: string;
-    email?: string;
-    createdAt: Date;
-    updatedAt: Date;
+	_id: string;
+	name: string;
+	middleName?: string;
+	lastName: string;
+	secondLastName?: string;
+	documentType: string;
+	documentNumber: string;
+	phoneNumber?: string;
+	email?: string;
+	createdAt: Date;
+	updatedAt: Date;
 }

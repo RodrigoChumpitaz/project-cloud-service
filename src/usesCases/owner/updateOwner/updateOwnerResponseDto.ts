@@ -1,3 +1,3 @@
-import { Owner } from "../../../domain/owner/owner";
+import { Owner } from '../../../domain/owner/owner';
 
-export type UpdateOwnerResponseDto = Owner
+export type UpdateOwnerResponseDto = Owner;

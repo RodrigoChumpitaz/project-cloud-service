@@ -16,7 +16,7 @@ export interface GetVehicleDbResponseMap {
 	owner: Partial<Owner> | null;
 }
 
-export type IVehicleDbResponse = Omit<IVehicleDb, 'ownerId'> & { ownerId: Partial<IOwnerDb> } 
+export type IVehicleDbResponse = Omit<IVehicleDb, 'ownerId'> & { ownerId: Partial<IOwnerDb> };
 export class VehicleMap {
 	static fromDbToDomain(vehicle: IVehicleDb): Vehicle {
 		return {
@@ -43,18 +43,20 @@ export class VehicleMap {
 			licensePlate: vehicle.licensePlate,
 			registrationDate: vehicle.registrationDate,
 			notes: vehicle.notes || '',
-			owner: vehicle.ownerId ? {
-				id: vehicle.ownerId?._id,
-				name: vehicle.ownerId?.name || '',
-				middleName: vehicle.ownerId?.middleName || '',
-				lastName: vehicle.ownerId?.lastName || '',
-				secondLastName: vehicle.ownerId?.secondLastName || '',
-				documentType: vehicle.ownerId?.documentType?.toUpperCase() || '',
-				documentNumber: vehicle.ownerId?.documentNumber || '',
-				phoneNumber: vehicle.ownerId?.phoneNumber || '',
-				email: vehicle.ownerId?.email || ''
-			} : null,
+			owner: vehicle.ownerId
+				? {
+						id: vehicle.ownerId?._id,
+						name: vehicle.ownerId?.name || '',
+						middleName: vehicle.ownerId?.middleName || '',
+						lastName: vehicle.ownerId?.lastName || '',
+						secondLastName: vehicle.ownerId?.secondLastName || '',
+						documentType: vehicle.ownerId?.documentType?.toUpperCase() || '',
+						documentNumber: vehicle.ownerId?.documentNumber || '',
+						phoneNumber: vehicle.ownerId?.phoneNumber || '',
+						email: vehicle.ownerId?.email || ''
+					}
+				: null,
 			status: vehicle.status
-		}
+		};
 	}
 }

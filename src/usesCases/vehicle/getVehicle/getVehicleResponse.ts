@@ -1,3 +1,3 @@
-import { GetVehicleDbResponseMap } from "../../../mappers/vehicleMap";
+import { GetVehicleDbResponseMap } from '../../../mappers/vehicleMap';
 
 export type GetVehicleResponseDto = GetVehicleDbResponseMap;

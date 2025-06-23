@@ -1,3 +1,3 @@
 export interface GetOwnerRequestDto {
-    id: string;
+	id: string;
 }

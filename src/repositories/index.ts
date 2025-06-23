@@ -11,4 +11,12 @@ const vehicleRepository = new VehicleImplRepository();
 const repairLogRepository = new RepairLogImplRepository();
 const ownerRepository = new OwnerImplRepository();
 
-export { userRepository, IUserRepository, vehicleRepository, repairLogRepository, IRepairLogRepository, ownerRepository, IOwnerRepository };
+export {
+	userRepository,
+	IUserRepository,
+	vehicleRepository,
+	repairLogRepository,
+	IRepairLogRepository,
+	ownerRepository,
+	IOwnerRepository
+};
