@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7.0
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    container_name: merch-servicedb
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - merch-service-data:/data/db
+    networks:
+      - merch-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--host", "127.0.0.1", "--eval", "db.runCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  merch-service-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: merch-service-api
+    restart: on-failure
+    ports:
+      - '${PORT}:${PORT}'
+    depends_on:
+      - mongo
+    networks:
+      - merch-network
+    environment:
+      - PORT=${PORT}
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  merch-service-data:
+
+networks:
+  merch-network:
+    driver: bridge

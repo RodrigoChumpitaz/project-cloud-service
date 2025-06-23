@@ -1,4 +1,3 @@
-import { boolean, number } from 'joi';
 import { HOST, SWAGGER_SCHEMA } from '../../../config';
 
 export default {

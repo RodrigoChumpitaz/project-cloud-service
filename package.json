@@ -7,10 +7,13 @@
   "scripts": {
     "ts-build": "cd scripts && bash build.sh",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules src/index.ts",
+    "dev:up": "cd scripts && bash dev-up.sh",
     "start": "node build/index.js",
     "build": "tsc",
     "lint": "npx eslint --fix \"{src,apps,libs,test}/**/*.ts\" -c .eslintrc.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev:down": "docker compose down",
+    "test:small": "jest --passWithNoTests --config=jest.config.js --selectProjects small --runInBand --detectOpenHandles --coverage"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
