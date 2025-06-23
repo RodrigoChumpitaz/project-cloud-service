@@ -1,0 +1,70 @@
+@startuml
+!define ENTITY class
+!define PK <<PK>>
+!define FK <<FK>>
+
+ENTITY Owner {
+    + id : string PK
+    --
+    name : string
+    middleName : string
+    lastName : string
+    secondLastName : string
+    documentType : string
+    documentNumber : string
+    phoneNumber : string
+    email : string
+    createdAt : string
+    updatedAt : string
+}
+
+ENTITY Vehicle {
+    + id : string PK
+    --
+    make : string
+    model : string
+    year : integer
+    category : string
+    licensePlate : string
+    registrationDate : string
+    notes : string
+    + ownerId : string FK
+    createdAt : string
+    updatedAt : string
+}
+
+ENTITY RepairLog {
+    + id : string PK
+    --
+    + vehicle : string FK
+    repairNumber : string
+    technicalReview : string
+    observation : string
+    subTotal : decimal
+    discount : decimal
+    total : decimal
+    paymentType : string
+    repairStatus : string
+}
+
+' Relaciones
+Owner ||--o{ Vehicle : "owns"
+Vehicle ||--o{ RepairLog : "has repairs"
+
+note right of Owner
+  Propietario de los vehículos
+  Puede tener múltiples vehículos
+end note
+
+note right of Vehicle
+  Vehículo registrado en el sistema
+  Pertenece a un propietario
+  Puede tener múltiples reparaciones
+end note
+
+note right of RepairLog
+  Registro de reparaciones
+  Cada reparación pertenece a un vehículo
+end note
+
+@enduml
