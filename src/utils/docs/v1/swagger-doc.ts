@@ -81,7 +81,7 @@ export default {
 					404: {
 						description: 'Vehicle not found',
 						schema: {
-							$ref: '#/definitions/VehicleNotFoundError'
+							$ref: '#/definitions/NotFoundError'
 						}
 					}
 				}
@@ -105,13 +105,13 @@ export default {
 					400: {
 						description: 'Bad request',
 						schema: {
-							$ref: '#/definitions/VehicleDeleteBadRequestError'
+							$ref: '#/definitions/BadRequestError'
 						}
 					},
 					404: {
 						description: 'Vehicle not found',
 						schema: {
-							$ref: '#/definitions/VehicleNotFoundError'
+							$ref: '#/definitions/NotFoundError'
 						}
 					}
 				}
@@ -143,18 +143,324 @@ export default {
 					400: {
 						description: 'Bad request',
 						schema: {
-							$ref: '#/definitions/VehicleUpdateBadRequestError'
+							$ref: '#/definitions/BadRequestError'
 						}
 					},
 					404: {
 						description: 'Vehicle not found',
 						schema: {
-							$ref: '#/definitions/VehicleNotFoundError'
+							$ref: '#/definitions/NotFoundError'
 						}
 					}
 				}
 			}
-		}
+		},
+		'/repair': {
+            post: {
+                tags: ['RepairLog'],
+                summary: 'Crear un nuevo registro de reparación',
+                parameters: [
+                    {
+                        name: 'body',
+                        in: 'body',
+                        required: true,
+                        schema: {
+                            $ref: '#/definitions/CreateRepairLogRequestDto'
+                        }
+                    }
+                ],
+                responses: {
+                    201: {
+                        description: 'Registro de reparación creado exitosamente',
+                        schema: {
+                            $ref: '#/definitions/RepairLog'
+                        }
+                    },
+                    400: {
+                        description: 'Solicitud incorrecta',
+                        schema: {
+                            $ref: '#/definitions/RepairLogCreateBadRequestError'
+                        }
+                    },
+                    404: {
+                        description: 'Vehículo no encontrado',
+                        schema: {
+                            $ref: '#/definitions/RepairLogCreateNotFoundError'
+                        }
+                    }
+                }
+            },
+            get: {
+                tags: ['RepairLog'],
+                summary: 'Obtener registros de reparación paginados',
+                parameters: [
+                    {
+                        name: 'page',
+                        in: 'query',
+                        required: false,
+                        type: 'integer',
+                        description: 'Página'
+                    },
+                    {
+                        name: 'limit',
+                        in: 'query',
+                        required: false,
+                        type: 'integer',
+                        description: 'Cantidad por página'
+                    },
+                    {
+                        name: 'paymentType',
+                        in: 'query',
+                        required: false,
+                        type: 'string',
+                        description: 'Filtrar por tipo de pago'
+                    },
+                    {
+                        name: 'repairStatus',
+                        in: 'query',
+                        required: false,
+                        type: 'string',
+                        description: 'Filtrar por estado de reparación'
+                    }
+                ],
+                responses: {
+                    200: {
+                        description: 'Lista de registros de reparación',
+                        schema: {
+                            type: 'array',
+                            items: {
+                                $ref: '#/definitions/RepairLog'
+                            }
+                        }
+                    },
+                    400: {
+                        description: 'Parámetros de paginación inválidos',
+                        schema: {
+                            $ref: '#/definitions/BadRequestError'
+                        }
+                    }
+                }
+            },
+        },
+        '/repair/{id}': {
+			delete: {
+				tags: ['RepairLog'],
+				summary: 'Delete a repairLog by ID',
+				parameters: [
+					{
+						name: 'id',
+						in: 'path',
+						required: true,
+						type: 'string',
+						description: 'ID to delete the repair log'
+					}
+				],
+				responses: {
+					200: {
+						description: 'Vehicle deleted successfully'
+					},
+					400: {
+						description: 'Bad request',
+						schema: {
+							$ref: '#/definitions/BadRequestError'
+						}
+					},
+					404: {
+						description: 'Vehicle not found',
+						schema: {
+							$ref: '#/definitions/NotFoundError'
+						}
+					}
+				}
+			},
+            patch: {
+                tags: ['RepairLog'],
+                summary: 'Actualizar un registro de reparación',
+                parameters: [
+					{
+						name: 'id',
+						in: 'path',
+						required: true,
+						type: 'string',
+						description: 'ID to delete the repair log'
+					},
+                    {
+                        name: 'body',
+                        in: 'body',
+                        required: true,
+                        schema: {
+                            $ref: '#/definitions/BadRequestError'
+                        }
+                    }
+                ],
+                responses: {
+                    200: {
+                        description: 'Registro de reparación actualizado exitosamente',
+                        schema: {
+                            $ref: '#/definitions/RepairLog'
+                        }
+                    },
+                    400: {
+                        description: 'Solicitud incorrecta',
+                        schema: {
+                            $ref: '#/definitions/BadRequestError'
+                        }
+                    },
+                    404: {
+                        description: 'Vehicle not found',
+                        schema: {
+                            $ref: '#/definitions/NotFoundError'
+                        }
+                    }
+                }
+            }
+        },
+		'/owner': {
+            post: {
+                tags: ['Owner'],
+                summary: 'Crear un nuevo propietario',
+                parameters: [
+                    {
+                        name: 'body',
+                        in: 'body',
+                        required: true,
+                        schema: {
+                            $ref: '#/definitions/CreateOwnerRequestDto'
+                        }
+                    }
+                ],
+                responses: {
+                    201: {
+                        description: 'Propietario creado exitosamente',
+                        schema: {
+                            $ref: '#/definitions/CreateOwnerResponseDto'
+                        }
+                    },
+                    400: {
+                        description: 'Solicitud incorrecta',
+                        schema: {
+                            $ref: '#/definitions/BadRequestError'
+                        }
+                    }
+                }
+            },
+            get: {
+                tags: ['Owner'],
+                summary: 'Obtener todos los propietarios',
+                parameters: [],
+                responses: {
+                    200: {
+                        description: 'Lista de propietarios',
+                        schema: {
+                            type: 'array',
+                            items: {
+                                $ref: '#/definitions/CreateOwnerResponseDto'
+                            }
+                        }
+                    },
+                    400: {
+                        description: 'Solicitud incorrecta',
+                        schema: {
+                            $ref: '#/definitions/BadRequestError'
+                        }
+                    }
+                }
+            }
+        },
+        '/owner/{id}': {
+            get: {
+                tags: ['Owner'],
+                summary: 'Obtener propietario por ID',
+                parameters: [
+                    {
+                        name: 'id',
+                        in: 'path',
+                        required: true,
+                        type: 'string',
+                        description: 'ID del propietario'
+                    }
+                ],
+                responses: {
+                    200: {
+                        description: 'Detalles del propietario',
+                        schema: {
+                            $ref: '#/definitions/CreateOwnerResponseDto'
+                        }
+                    },
+                    404: {
+                        description: 'Propietario no encontrado',
+                        schema: {
+                            $ref: '#/definitions/NotFoundError'
+                        }
+                    }
+                }
+            },
+            patch: {
+                tags: ['Owner'],
+                summary: 'Actualizar propietario por ID',
+                parameters: [
+                    {
+                        name: 'id',
+                        in: 'path',
+                        required: true,
+                        type: 'string',
+                        description: 'ID del propietario'
+                    },
+                    {
+                        name: 'body',
+                        in: 'body',
+                        required: true,
+                        schema: {
+                            $ref: '#/definitions/UpdateOwnerRequestDto'
+                        }
+                    }
+                ],
+                responses: {
+                    200: {
+                        description: 'Propietario actualizado exitosamente',
+                        schema: {
+                            $ref: '#/definitions/CreateOwnerResponseDto'
+                        }
+                    },
+                    400: {
+                        description: 'Solicitud incorrecta',
+                        schema: {
+                            $ref: '#/definitions/BadRequestError'
+                        }
+                    },
+                    404: {
+                        description: 'Propietario no encontrado',
+                        schema: {
+                            $ref: '#/definitions/NotFoundError'
+                        }
+                    }
+                }
+            },
+            delete: {
+                tags: ['Owner'],
+                summary: 'Eliminar propietario por ID',
+                parameters: [
+                    {
+                        name: 'id',
+                        in: 'path',
+                        required: true,
+                        type: 'string',
+                        description: 'ID del propietario'
+                    }
+                ],
+                responses: {
+                    200: {
+                        description: 'Propietario eliminado exitosamente'
+                    },
+                    404: {
+                        description: 'Propietario no encontrado',
+                        schema: {
+                            $ref: '#/definitions/NotFoundError'
+                        }
+                    }
+                }
+            }
+        },
 	},
 	definitions: {
 		CreateVehicleRequestDto: {
@@ -224,22 +530,13 @@ export default {
 				message: { type: 'string' }
 			}
 		},
-		VehicleDeleteBadRequestError: {
-			type: 'object',
-			properties: {
-				success: { type: 'boolean', example: false },
-				error: { type: 'string', example: 'Bad request' },
-				statusCode: { type: 'number', example: 400 },
-				type: { type: 'string', example: 'VehicleDeleteBadRequest' }
-			}
-		},
-		VehicleNotFoundError: {
+		NotFoundError: {
 			type: 'object',
 			properties: {
 				success: { type: 'boolean', example: false },
 				error: { type: 'string', example: 'Not found' },
 				statusCode: { type: 'number', example: 404 },
-				type: { type: 'string', example: 'VehicleNotFoundError' }
+				type: { type: 'string', example: 'NotFoundError' }
 			}
 		},
 		UpdateVehicleRequestDto: {
@@ -251,14 +548,72 @@ export default {
 				ownerId: { type: 'string', example: null }
 			}
 		},
-		VehicleUpdateBadRequestError: {
+		BadRequestError: {
 			type: 'object',
 			properties: {
 				success: { type: 'boolean', example: false },
 				error: { type: 'string', example: 'Bad request' },
 				statusCode: { type: 'number', example: 400 },
-				type: { type: 'string', example: 'VehicleUpdateBadRequestError' }
+				type: { type: 'string', example: 'BadRequestError' }
 			}
-		}
+		},
+		RepairLog: {
+			type: 'object',
+			properties: {
+				id: { type: 'string' },
+				vehicle: { type: 'string' },
+				repairNumber: { type: 'string' },
+				technicalReview: { type: 'string', nullable: true },
+				observation: { type: 'string', nullable: true },
+				subTotal: { type: 'number' },
+				discount: { type: 'number', nullable: true },
+				total: { type: 'number' },
+				paymentType: { type: 'string' },
+				repairStatus: { type: 'string' }
+			}
+		},
+		CreateOwnerRequestDto: {
+            type: 'object',
+            properties: {
+                name: { type: 'string' },
+                middleName: { type: 'string' },
+                lastName: { type: 'string' },
+                secondLastName: { type: 'string' },
+                documentType: { type: 'string' },
+                documentNumber: { type: 'string' },
+                phoneNumber: { type: 'string' },
+                email: { type: 'string' }
+            },
+            required: ['name', 'lastName', 'documentType', 'documentNumber']
+        },
+        CreateOwnerResponseDto: {
+            type: 'object',
+            properties: {
+                id: { type: 'string' },
+                name: { type: 'string' },
+                middleName: { type: 'string' },
+                lastName: { type: 'string' },
+                secondLastName: { type: 'string' },
+                documentType: { type: 'string' },
+                documentNumber: { type: 'string' },
+                phoneNumber: { type: 'string' },
+                email: { type: 'string' },
+                createdAt: { type: 'string' },
+                updatedAt: { type: 'string' }
+            }
+        },
+        UpdateOwnerRequestDto: {
+            type: 'object',
+            properties: {
+                name: { type: 'string' },
+                middleName: { type: 'string' },
+                lastName: { type: 'string' },
+                secondLastName: { type: 'string' },
+                documentType: { type: 'string' },
+                documentNumber: { type: 'string' },
+                phoneNumber: { type: 'string' },
+                email: { type: 'string' }
+            }
+        }
 	}
 };
