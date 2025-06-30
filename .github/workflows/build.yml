@@ -48,6 +48,9 @@ jobs:
         script: |
           # Navegar al directorio del proyecto
           cd /home/inel/dev/project-cloud-service
+
+          # Configurar SSH para usar la llave específica
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/rod -o StrictHostKeyChecking=no"
           
           # Hacer pull de los últimos cambios
           git pull origin main
