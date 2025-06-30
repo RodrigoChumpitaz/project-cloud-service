@@ -20,6 +20,13 @@ app.use(
 	})
 );
 
+app.use('/', (req: Request, res: Response): any => {
+	return res.status(200).json({
+		message: 'Welcome to the Vehicle Management API',
+		version: '1.0.0',
+		documentation: '/api/v1/docs'
+	});
+})
 app.use('/favicon.ico', (req: Request, res: Response) => res.status(204).end() as any);
 app.use('/api/v1', userService, vehicleService, repairLogService, ownerService);
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
