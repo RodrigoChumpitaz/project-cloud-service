@@ -26,7 +26,7 @@ app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.get('/', (req: Request, res: Response): any => {
 	return res.status(200).json({
 		message: 'Welcome to the Vehicle Management API',
-		version: '1.0.0',
+		version: '1.0',
 		documentation: '/api/v1/docs'
 	});
 })
