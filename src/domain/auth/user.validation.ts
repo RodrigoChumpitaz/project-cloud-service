@@ -14,4 +14,4 @@ const validateUserSchema = (user: IUserProps): Joi.ValidationResult<IUserProps> 
 	return userSchema.validate(user, { abortEarly: false });
 };
 
-export { validateUserSchema };
+export { validateUserSchema, userSchema };

@@ -16,4 +16,4 @@ function ownerValidation(props: IOwnerProps): Joi.ValidationResult<IOwnerProps> 
 	return ownerValidationSchema.validate(props, { abortEarly: false });
 }
 
-export { ownerValidation };
+export { ownerValidation, ownerValidationSchema };

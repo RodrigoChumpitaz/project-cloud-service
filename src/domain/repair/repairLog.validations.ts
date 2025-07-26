@@ -18,4 +18,4 @@ const validateRapirLogSchema = (repairLog: IRepairLogProps): Joi.ValidationResul
 	return repairLogSchema.validate(repairLog, { abortEarly: false });
 };
 
-export { validateRapirLogSchema };
+export { validateRapirLogSchema, repairLogSchema };

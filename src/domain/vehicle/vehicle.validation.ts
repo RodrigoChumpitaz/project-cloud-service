@@ -25,4 +25,4 @@ const validateUpdateVehicleSchema = (update: Partial<IVehicleProps>): Joi.Valida
 	return updateVehicleSchema.validate(update, { abortEarly: false });
 };
 
-export { validateVehicleSchema, validateUpdateVehicleSchema };
+export { validateVehicleSchema, validateUpdateVehicleSchema, vehicleSchema };
