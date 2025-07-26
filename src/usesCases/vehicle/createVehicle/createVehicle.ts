@@ -8,7 +8,6 @@ import {
 	VehicleInvalidLicensePlateError,
 	VehicleInvalidYearError
 } from './createVehicleErrors';
-import { Vehicle } from '../../../domain/vehicle/vehicle';
 import { IVehicleRepository } from '../../../repositories/vehicle.repository';
 import { CreateVehicleResponseDto } from './createVehicleResponse';
 
@@ -30,19 +29,15 @@ class CreateVehicle implements UseCase<CreateVehicleRequestDto, Response> {
 
 	async execute(request: CreateVehicleRequestDto, service?: any): Promise<Response> {
 		try {
-			const vehicleInstanceOrError = Vehicle.create(request);
-			if (vehicleInstanceOrError.isErr()) {
-				return err(new VehicleCreateBadRequestError(vehicleInstanceOrError.error));
-			}
 			//verificar si el vehiculo existe
 			const existVehicle = await this.vehicleRepository.getVehicleByLicensePlate(
-				vehicleInstanceOrError.value.licensePlate
+				request.licensePlate
 			);
 			if (existVehicle) {
 				return err(new VehicleAlreadyRegisteredError());
 			}
 			// Crear el vehículo en el repositorio
-			const result = await this.vehicleRepository.createVehicle(vehicleInstanceOrError.value);
+			const result = await this.vehicleRepository.createVehicle(request);
 			return ok(result);
 		} catch (error) {
 			return err(error);

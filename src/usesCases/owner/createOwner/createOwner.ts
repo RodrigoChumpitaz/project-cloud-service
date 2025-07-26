@@ -17,16 +17,11 @@ class CreateOwner implements UseCase<CreateOwnerRequestDto, Response> {
 
 	async execute(request: CreateOwnerRequestDto, service?: any): Promise<Response> {
 		try {
-			const ownerOrError = Owner.create(request);
-			if (ownerOrError.isErr()) {
-				return err(new CreateOwnerBadRequestError(ownerOrError.error));
-			}
-			const owner = ownerOrError.value;
-			const ownerByDocumentNumber = await this.ownerRepository.getOwner({ documentNumber: owner.documentNumber });
+			const ownerByDocumentNumber = await this.ownerRepository.getOwner({ documentNumber: request.documentNumber });
 			if (ownerByDocumentNumber) {
 				return err(new CreateOwnerAlreadyExistsError());
 			}
-			const result = await this.ownerRepository.createOwner(owner);
+			const result = await this.ownerRepository.createOwner(request);
 			return ok(result);
 		} catch (error) {
 			throw new UnexpectedError(error);

@@ -33,19 +33,15 @@ class UpdateRepairLog implements UseCase<UpdateRepairLogRequestDto, Response> {
 
 	async execute(request: UpdateRepairLogRequestDto, service?: any): Promise<Response> {
 		try {
-			const repairLogInstanceOrError = RepairLog.create(request);
-			if (repairLogInstanceOrError.isErr()) {
-				return err(new RepairLogUpdateBadRequestError(repairLogInstanceOrError.error));
-			}
-			if (!isValidObjectId(repairLogInstanceOrError.value.id)) {
+			if (!isValidObjectId(request.id)) {
 				return err(new RepairLogUpdateInvalidIdError());
 			}
-			const vehicleExist = await this.vehicleRepository.getVehicleById(repairLogInstanceOrError.value.vehicle);
+			const vehicleExist = await this.vehicleRepository.getVehicleById(request.vehicle);
 			if (!vehicleExist) {
 				return err(new RepairLogUpdateVehicleNotFoundError());
 			}
 
-			const result = await this.repairLogRepository.updateRepairLog(repairLogInstanceOrError.value);
+			const result = await this.repairLogRepository.updateRepairLog(request);
 			if (!result) {
 				return err(new RepairLogUpdateLogNotFoundError());
 			}

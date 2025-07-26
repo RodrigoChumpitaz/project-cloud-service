@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { OwnerController } from '../controllers/owner/owner.controller';
+import { validateRequest } from '../middleware';
+import { ownerValidationSchema } from '../domain/owner/owner.validation';
 
 class OwnerRouter {
 	router: Router;
@@ -13,7 +15,7 @@ class OwnerRouter {
 	}
 
 	routes() {
-		this.router.route('/owner').post(this.controller.createOwner).get(this.controller.getOwners);
+		this.router.route('/owner').post(validateRequest(ownerValidationSchema), this.controller.createOwner).get(this.controller.getOwners);
 		this.router
 			.route('/owner/:id')
 			.get(this.controller.getOwnerById)

@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { VehicleController } from '../controllers/vehicle/vehicle.controller';
+import { validateRequest } from '../middleware';
+import { vehicleSchema } from '../domain/vehicle/vehicle.validation';
 
 class VehicleRouter {
 	router: Router;
@@ -16,7 +18,7 @@ class VehicleRouter {
 		this.router
 			.route('/vehicles')
 			.get(this.controller.getAllVehicles.bind(this.controller))
-			.post(this.controller.createVehicle.bind(this.controller));
+			.post(validateRequest(vehicleSchema), this.controller.createVehicle.bind(this.controller));
 		this.router
 			.route('/vehicles/:id')
 			.get(this.controller.getVehicle.bind(this.controller))

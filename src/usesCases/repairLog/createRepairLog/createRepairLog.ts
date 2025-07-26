@@ -29,18 +29,14 @@ class CreateRepairLog implements UseCase<CreateRepairLogRequestDto, Response> {
 
 	async execute(request: CreateRepairLogRequestDto, service?: any): Promise<Response> {
 		try {
-			const repairLogInstanceOrError = RepairLog.create(request);
-			if (repairLogInstanceOrError.isErr()) {
-				return err(new RepairLogCreateBadRequestError(repairLogInstanceOrError.error));
-			}
 			if (!isValidObjectId(request.vehicle)) {
 				return err(new RepairLogCreateVehicleInvalidObjectIdError());
 			}
-			const vehicleExist = await this.vehicleRepository.getVehicleById(repairLogInstanceOrError.value.vehicle);
+			const vehicleExist = await this.vehicleRepository.getVehicleById(request.vehicle);
 			if (!vehicleExist) {
 				return err(new RepairLogCreateVehicleNotFoundError());
 			}
-			const result = await this.repairLogRepository.createRepairLog(repairLogInstanceOrError.value);
+			const result = await this.repairLogRepository.createRepairLog(request);
 			return ok(result);
 		} catch (error) {
 			return err(error);
