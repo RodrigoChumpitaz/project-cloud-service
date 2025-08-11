@@ -417,7 +417,7 @@ export default {
                 ],
                 responses: {
                     200: {
-                        description: 'Propietario actualizado exitosamente',
+                        description: 'Propietario actualizado exitosamente.',
                         schema: {
                             $ref: '#/definitions/CreateOwnerResponseDto'
                         }
