@@ -7,7 +7,7 @@ const vehicleSchema = Joi.object<IVehicleProps>({
 	year: Joi.number().integer().min(1886).max(new Date().getFullYear()).required(), // El año debe ser entre 1886 y el año actual
 	category: Joi.string().required(),
 	licensePlate: Joi.string().max(10).required(),
-	registrationDate: Joi.date().required(),
+	registrationDate: Joi.string().optional().default(new Date()),
 	notes: Joi.string().allow('').optional(),
 	ownerId: Joi.string().optional().allow(null), // Permite null si el propietario no está asignado
 	status: Joi.string().optional().allow('') // Permite solo 'active' o 'inactive'
