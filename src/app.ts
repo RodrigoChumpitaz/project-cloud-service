@@ -7,6 +7,7 @@ import vehicleService from './services/vehicle.service';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDoc from './utils/docs/v1/swagger-doc';
 import ownerService from './services/owner.service';
+import { NotFoundPathException } from './middleware';
 
 const app = express();
 
@@ -30,5 +31,6 @@ app.get('/', (req: Request, res: Response): any => {
 		documentation: '/api/v1/docs'
 	});
 })
+app.use(NotFoundPathException.handleNotFoundPath);
 
 export default app;
